@@ -3,9 +3,8 @@
 namespace Tests\Feature;
 
 use App\Product;
-use App\Retailer;
-use App\Stock;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use RetailerWithProductSeeder;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -15,21 +14,14 @@ class ProductTest extends TestCase
     /** @test */
     public function it_checks_stock_for_products_at_retailers()
     {
-        $switch = Product::create(['name' => 'Nintendo switch']);
+        $this->seed(RetailerWithProductSeeder::class);
 
-        $bestBuy = Retailer::create(['name' => 'Best Buy']);
+        tap(Product::first(), function ($product) {
+            $this->assertFalse($product->inStock());
 
-        $this->assertFalse($switch->inStock());
+            $product->stock()->first()->update(['in_stock' => true]);
 
-        $stock = new Stock([
-            'price' => 1000,
-            'url' => 'http://foo.com',
-            'sku' => '12345',
-            'in_stock' => true
-        ]);
-
-        $bestBuy->addStock($switch, $stock);
-
-        $this->assertTrue($switch->inStock());
+            $this->assertTrue($product->inStock());
+        });
     }
 }
