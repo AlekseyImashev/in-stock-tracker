@@ -6,6 +6,11 @@ class Product extends Model
 {
     protected $guarded = [];
 
+    public function track()
+    {
+        $this->stock->each->track();
+    }
+
     public function inStock()
     {
         return $this
