@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use App\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use RetailerWithProductSeeder;
 use Tests\TestCase;
+use RetailerWithProductSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProductTest extends TestCase
 {
