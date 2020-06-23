@@ -16,6 +16,6 @@ class SendStockUpdateNotification
      */
     public function handle(NowInStock $event)
     {
-        User::first()->notify(new ImportantStockUpdate);
+        User::first()->notify(new ImportantStockUpdate($event->stock));
     }
 }
