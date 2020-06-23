@@ -5,10 +5,8 @@ namespace Tests\Unit;
 use App\Stock;
 use App\Retailer;
 use Tests\TestCase;
-use App\Clients\StockStatus;
 use RetailerWithProductSeeder;
 use App\Clients\ClientException;
-use Facades\App\Clients\ClientFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StockTest extends TestCase
@@ -32,9 +30,7 @@ class StockTest extends TestCase
     {
         $this->seed(RetailerWithProductSeeder::class);
 
-        ClientFactory::shouldReceive('make->checkAvailability')->andReturn(
-            new StockStatus($available = true, $price = 9900)
-        );
+        $this->mockClientRequest($available = true, $price = 9900);
 
         $stock = tap(Stock::first())->track();
 
