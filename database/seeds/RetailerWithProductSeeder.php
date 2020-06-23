@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use App\Product;
 use App\Retailer;
 use App\Stock;
@@ -24,5 +25,7 @@ class RetailerWithProductSeeder extends Seeder
             'sku' => '12345',
             'in_stock' => false
         ]));
+
+        factory(User::class)->create(['email' => 'alex@example.com']);
     }
 }
