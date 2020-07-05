@@ -8,7 +8,7 @@ use RetailerWithProductSeeder;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class TrackCommendTest extends TestCase
+class TrackCommandTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -25,8 +25,7 @@ class TrackCommendTest extends TestCase
 
         $this->mockClientRequest();
 
-        $this->artisan('track')
-            ->expectsOutput('All Done!');
+        $this->artisan('track');
 
         $this->assertTrue(Product::first()->inStock());
     }
