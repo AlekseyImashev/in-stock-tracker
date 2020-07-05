@@ -6,17 +6,18 @@ use App\User;
 use App\Stock;
 use App\History;
 use App\Clients\StockStatus;
+use Illuminate\Queue\SerializesModels;
 use App\Notifications\ImportantStockUpdate;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class TrackStock implements ShouldQueue
 {
-    use Dispatchable;
+    use Dispatchable, SerializesModels;
 
     protected Stock $stock;
 
-    protected StockStatus $status;
+    protected ?StockStatus $status = null;
 
     public function __construct(Stock $stock)
     {

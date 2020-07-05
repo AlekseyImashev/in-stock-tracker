@@ -4,11 +4,11 @@ namespace App\Notifications;
 
 use App\Stock;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class ImportantStockUpdate extends Notification
+class ImportantStockUpdate extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -30,7 +30,7 @@ class ImportantStockUpdate extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -41,28 +41,15 @@ class ImportantStockUpdate extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Important Stock Update for' . $this->stock->product->name)
-                    ->line('We have an important update to the product you have been tracking')
-                    ->action('Buy it Now', url($this->stock->url))
-                    ->line('Go get it!');
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
+            ->subject('Important Stock Update for' . $this->stock->product->name)
+            ->line('We have an important update to the product you have been tracking')
+            ->action('Buy it Now', url($this->stock->url))
+            ->line('Go get it!');
     }
 }
